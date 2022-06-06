@@ -9,13 +9,12 @@ async function searchCompany(){
 
 }
 function loadListOfCompanies(list){
-
     const companiList = document.createElement('div');
     for (let i=0; i<list.length; i++){
         if (i>=10){break}
         let comapni = document.createElement('a')
         let row = list[i].symbol+", "+list[i].name;
-        let url = "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company.html?symbol="+list[i].symbol;
+        let url = "company.html?symbol="+list[i].symbol;
         comapni.innerHTML = row
         comapni.setAttribute('id', 'comapni')
         comapni.setAttribute('class', 'row')

@@ -8,7 +8,10 @@ fetchUrl(historyUrl, presentCompanyHistroy)
 
 
 
+
 function presentCompanyInformation(data){
+    console.log(searchUrl);
+    console.log(data);
     let companyProfile = document.createElement('div');
     let logoAndName =  document.createElement('div');
     let img = document.createElement('img');
@@ -55,12 +58,12 @@ function  presentCompanyHistroy(history){
     const labels = [];
     const price = [];
     const ctx = document.getElementById('myChart').getContext('2d');
+   
     for (let i=0; i<history.historical.length; i++){
-        let date = parseInt(history.historical[i].date);
-        if (i === 0){
-            labels.push(date);
-        }else if (date<labels[labels.length-1]){
-            labels.push(date);
+        if (i >= 20){
+            break;
+        }else{
+            labels.push(history.historical[i].date);
             price.push(history.historical[i].close);
         
         }
@@ -84,8 +87,11 @@ function  presentCompanyHistroy(history){
         type :'line',
         data: data, 
         Option:{
+            radius:5,
+            hitRadius: 30,
+            hoverRadius: 12,
             responsive:true,
- 
+            
         },
     };
     const myChart = new Chart(ctx, config);

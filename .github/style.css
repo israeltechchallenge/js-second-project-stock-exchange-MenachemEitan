@@ -8,7 +8,9 @@
 
 
 #preloader{
-    position: relative;
+    position: absolute;
+    left: 45vw;
+    top: 45vh;
     visibility: hidden;
     border: 6px solid #f3f3f3;
     border-radius: 50%;

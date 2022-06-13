@@ -1,10 +1,25 @@
 var whatToSearch = document.querySelector("#whichCompany");
 let extraData = []
 // let symbols = serverReq('https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/financial-statement-symbol-lists')
+let allCompanysUrl = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/index';
+
+
+async function getAllCompnys(allCompanysUrl){
+   let allCompanyList =await serverReq(allCompanysUrl).then(res => {return(res);})
+   let container = document.getElementsByClassName('marquee-content')[0];
+   let ul = document.createElement('ul')
+   for (let i=0; i<allCompanyList.length; i++){
+       let li = document.createElement('li');
+       li.innerHTML = allCompanyList[i].symbol + " "+ "$"+allCompanyList[i].price ;
+       ul.appendChild(li)
+   }container.appendChild(ul)
+}
+getAllCompnys(allCompanysUrl)
 
 
 
 function searchCompany() {
+    document.getElementById('preloader').style.visibility = 'visible';
     let serverUrl = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=' + whatToSearch.value + '&amp;limit=10&amp;exchange=NASDAQ'
     serverReq(serverUrl).then(async res => {
         await loadListOfCompanies(res)
@@ -25,7 +40,7 @@ async function loadListOfCompanies(list) {
         if (extraInfo[0]!=0){
             let copanyImg = document.createElement('img');
             copanyImg.style.height='50px';
-            copanyImg.style.width='50px';
+            copanyImg.style.width='75px';
             copanyImg.setAttribute('src',extraInfo[0]);
             comapni.appendChild(copanyImg)
         }
@@ -47,7 +62,6 @@ async function loadListOfCompanies(list) {
 }
 
 async function serverReq(url) {
-    document.getElementById('preloader').style.visibility = 'visible';
     const response = await fetch(url);
     return response.json();
 }

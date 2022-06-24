@@ -4,17 +4,18 @@ let extraData = []
 let allCompanysUrl = 'https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/index';
 
 
-async function getAllCompnys(allCompanysUrl){
-   let allCompanyList =await serverReq(allCompanysUrl).then(res => {return(res);})
-   let container = document.getElementsByClassName('marquee-content')[0];
-   let ul = document.createElement('ul')
-   for (let i=0; i<allCompanyList.length; i++){
-       let li = document.createElement('li');
-       li.innerHTML = allCompanyList[i].symbol + " "+ "$"+allCompanyList[i].price ;
-       ul.appendChild(li)
-   }container.appendChild(ul)
-}
-getAllCompnys(allCompanysUrl)
+// async function getAllCompnys(allCompanysUrl){
+//    let allCompanyList =await serverReq(allCompanysUrl).then(res => {return(res);})
+//    let container = document.getElementsByClassName('marquee-content')[0];
+//    let ul = document.createElement('ul')
+//    for (let i=0; i<allCompanyList.length; i++){
+//        let li = document.createElement('li');
+//        li.innerHTML = allCompanyList[i].symbol + " "+ "$"+allCompanyList[i].price ;
+//        ul.appendChild(li)
+//        console.log(li);
+//    }container.appendChild(ul)
+// }
+// getAllCompnys(allCompanysUrl)
 
 
 
@@ -61,7 +62,7 @@ async function loadListOfCompanies(list) {
     container.appendChild(companiList);
 }
 
-async function serverReq(url) {
+  async function serverReq(url) {
     const response = await fetch(url);
     return response.json();
 }

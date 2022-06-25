@@ -13,7 +13,6 @@ class Marquee{
             let li = document.createElement('li');
             li.innerHTML = allCompanyList[i].symbol + " "+ "$"+allCompanyList[i].price ;
             ul.appendChild(li)
-            console.log(li);
         }container.appendChild(ul) 
     }
 }

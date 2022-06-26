@@ -2,6 +2,7 @@
 class SearchResult{
     constructor(htmlElm){
         this.container = htmlElm;
+        self.whatToSearch = document.querySelector("#whichCompany").value;
 
     }
     async loadListOfCompanies(list) {
@@ -10,9 +11,9 @@ class SearchResult{
             if (i >= 10) { break }
             let comapni = document.createElement('a');
             const extraInfo = await this.getMorInfo(list[i].symbol);
-            let row = "("+ list[i].symbol+")" + ", " + list[i].name;
+            let text = "("+ list[i].symbol+")" + ", " + list[i].name;
             let url = "company.html?symbol=" + list[i].symbol;
-            comapni.innerHTML = row;
+            comapni.innerHTML = this.highlight(text, whatToSearch.value);
             if (extraInfo[0]!=0){
                 let copanyImg = document.createElement('img');
                 copanyImg.style.height='50px';
@@ -30,13 +31,29 @@ class SearchResult{
             comapni.addEventListener("click", () => { document.getElementById('preloader').style.visibility = 'visible' });
             comapni.setAttribute('href', url);
             comapni.setAttribute('target', '_self');
+            // console.log(row);
             companiList.appendChild(comapni);
+
+
         }
+
         const container = this.container;
         document.getElementById('preloader').style.visibility = 'hidden';
         container.appendChild(companiList);
     }
-
+    highlight(string, whatToSearch){
+        let res = "";
+        for (let i=0; i<string.length; i++){
+            if(string.substring(i, i+whatToSearch.length).toUpperCase()==whatToSearch.toUpperCase()){
+                res+="<mark>"+ string.substring(i, i+whatToSearch.length)+"</mark>";
+                i+=whatToSearch.length-1
+            }
+            else{
+                res+=string[i]
+            }
+        }
+        return res
+    }
     async  serverReq(url) {
         const response = await fetch(url);
         return response.json();
